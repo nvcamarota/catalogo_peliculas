@@ -31,7 +31,7 @@ class CatálogoPelícula:
 # Método listar_películas() que lee el contenido del archivo.txt y lo imprime por consola. En el caso de no existir el archivo, imprime un mensaje
     def listar_películas(self):
         if not os.path.exists(self.ruta_archivo):
-            print('\nActualmente, no hay películas en el catálogo 😢\n')
+            print('\nActualmente, no hay películas en el catálogo para mostrar 😢\n')
         else:
             print('\nEstas son las películas que se encuentran actualmente en el catálogo:\n')
             with open(f'{self.ruta_archivo}', 'r') as archivo:
@@ -39,16 +39,17 @@ class CatálogoPelícula:
     
 # Método eliminar_catálogo() que elimina el catálogo en caso de existir. Si el género (nombre_catálogo) no coincide con el dato ingresado, no se borrará el archivo. Si el archivo no existe, se imprime un mensaje
     def eliminar_películas(self):
-        print('\n¿Qué película(s) deseas eliminar?\n')
+        if not os.path.exists(self.ruta_archivo):
+            print('\nNo hay catálogos de películas para eliminar en este momento. Prueba agregando películas primero ✨\n')
         
-        print(f'{self.nombre_catálogo}\n')
-        eliminando_catálogo = input('Ingrese el género de la(s) película(s) que deseas eliminar: ').title()
-            
-        if os.path.exists(self.ruta_archivo) and eliminando_catálogo == self.nombre_catálogo:
-            os.remove(self.ruta_archivo)
-            print(f'\n¡La(s) película(s) del género "{self.nombre_catálogo}" ha(n) sido eliminada(s) con éxito!\n')
-        elif eliminando_catálogo != self.nombre_catálogo:
-            print('\nEl valor ingresado es inválido. Por favor, intente nuevamente.\n')
         else:
-            print('\nEste género de película no existe.\n')
-                
+            print('\n¿Qué película(s) deseas eliminar?\n')
+            print(f'- {self.nombre_catálogo}\n')
+            eliminando_catálogo = input('Ingrese el género de la(s) película(s) que deseas eliminar: ').title()
+            
+            if os.path.exists(self.ruta_archivo) and eliminando_catálogo == self.nombre_catálogo:
+                os.remove(self.ruta_archivo)
+                print(f'\n¡La(s) película(s) del género "{self.nombre_catálogo}" ha(n) sido eliminada(s) con éxito!\n')
+            else:
+                print('\nEl valor ingresado es inválido. Por favor, intente nuevamente.\n')
+     
